@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>About - Email Classification System</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #eef2ff, #f8fafc);
+            color: #1e293b;
+        }
+
+        nav {
+            background: white;
+            padding: 18px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            color: #2563eb;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #475569;
+            margin-left: 25px;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            color: #2563eb;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 60px auto;
+            padding: 20px;
+        }
+
+        .title {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .title h1 {
+            font-size: 38px;
+            color: #0f172a;
+            margin-bottom: 10px;
+        }
+
+        .title p {
+            color: #64748b;
+            font-size: 17px;
+        }
+
+        .card {
+            background: white;
+            padding: 35px;
+            border-radius: 18px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.10);
+        }
+
+        .card h2 {
+            color: #2563eb;
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            color: #475569;
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .feature {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .feature h3 {
+            color: #334155;
+            margin-bottom: 8px;
+        }
+
+        .feature p {
+            font-size: 14px;
+            margin-bottom: 0;
+        }
+
+        .tech-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .tech {
+            background: #e0e7ff;
+            color: #3730a3;
+            padding: 9px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .category {
+            background: #eff6ff;
+            color: #1d4ed8;
+            padding: 9px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+        .student-project {
+            text-align: center;
+            background: #eff6ff;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        @media (max-width: 700px) {
+
+            nav {
+                padding: 15px 5%;
+            }
+
+            nav a {
+                margin-left: 10px;
+                font-size: 14px;
+            }
+
+            .title h1 {
+                font-size: 30px;
+            }
+
+            .card {
+                padding: 22px;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <nav>
+
+        <div class="logo">
+            Email Classifier
+        </div>
+
+        <div>
+
+            <a href="/">
+                Home
+            </a>
+
+            <a href="/history">
+                History
+            </a>
+
+            <a href="/about">
+                About
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <div class="container">
+
+
+        <div class="title">
+
+            <h1>
+                About the System
+            </h1>
+
+            <p>
+                Email Classification System Using Machine Learning
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>
+                Project Overview
+            </h2>
+
+            <p>
+                The Email Classification System is a machine learning
+                based application designed to automatically classify
+                email messages into different categories.
+            </p>
+
+            <p>
+                The system processes the entered email text, converts
+                it into numerical features using TF-IDF and applies
+                a Multinomial Naive Bayes machine learning model to
+                predict the appropriate category.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>
+                How It Works
+            </h2>
+
+            <div class="features">
+
+                <div class="feature">
+
+                    <h3>
+                        1. Email Input
+                    </h3>
+
+                    <p>
+                        The user enters an email message into the system.
+                    </p>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <h3>
+                        2. Text Processing
+                    </h3>
+
+                    <p>
+                        The email text is cleaned and prepared for
+                        machine learning.
+                    </p>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <h3>
+                        3. TF-IDF
+                    </h3>
+
+                    <p>
+                        Important words are converted into numerical
+                        features using TF-IDF.
+                    </p>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <h3>
+                        4. Classification
+                    </h3>
+
+                    <p>
+                        Multinomial Naive Bayes predicts the email category.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>
+                Technologies Used
+            </h2>
+
+            <div class="tech-list">
+
+                <span class="tech">Python</span>
+
+                <span class="tech">Flask</span>
+
+                <span class="tech">Scikit-learn</span>
+
+                <span class="tech">TF-IDF</span>
+
+                <span class="tech">Naive Bayes</span>
+
+                <span class="tech">SQLite</span>
+
+                <span class="tech">HTML</span>
+
+                <span class="tech">CSS</span>
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>
+                Email Categories
+            </h2>
+
+            <div class="categories">
+
+                <span class="category">
+                    Education
+                </span>
+
+                <span class="category">
+                    Work
+                </span>
+
+                <span class="category">
+                    Promotional
+                </span>
+
+                <span class="category">
+                    Spam
+                </span>
+
+                <span class="category">
+                    Security
+                </span>
+
+                <span class="category">
+                    Personal
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="card student-project">
+
+            <h2>
+                SY BCS Mini Project
+            </h2>
+
+            <p>
+                Email Classification System Using Machine Learning
+            </p>
+
+            <p>
+                Developed as an academic project for learning
+                Machine Learning, Web Development and Database
+                Integration.
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+    <footer>
+
+        Email Classification System
+        <br>
+        SY BCS Mini Project
+
+    </footer>
+
+
+</body>
+
+</html>
