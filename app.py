@@ -9,6 +9,7 @@ app = Flask(__name__)
 
 DATABASE = "email_classifier.db"
 
+
 training_emails = [
     "your examination timetable is available",
     "please submit your college assignment",
@@ -46,6 +47,7 @@ training_emails = [
     "please call me when you are free",
     "hope you are doing well"
 ]
+
 
 training_labels = [
     "Education",
@@ -85,6 +87,7 @@ training_labels = [
     "Personal"
 ]
 
+
 vectorizer = TfidfVectorizer(
     lowercase=True,
     stop_words="english"
@@ -92,15 +95,32 @@ vectorizer = TfidfVectorizer(
 
 X = vectorizer.fit_transform(training_emails)
 
+
 model = MultinomialNB()
 model.fit(X, training_labels)
 
 
 def clean_text(text):
     text = text.lower()
-    text = re.sub(r"http\S+|www\S+", " ", text)
-    text = re.sub(r"[^a-z0-9\s]", " ", text)
-    text = re.sub(r"\s+", " ", text)
+
+    text = re.sub(
+        r"http\S+|www\S+",
+        " ",
+        text
+    )
+
+    text = re.sub(
+        r"[^a-z0-9\s]",
+        " ",
+        text
+    )
+
+    text = re.sub(
+        r"\s+",
+        " ",
+        text
+    )
+
     return text.strip()
 
 
@@ -128,7 +148,11 @@ def home():
 
 @app.route("/classify", methods=["POST"])
 def classify():
-    email = request.form.get("email", "").strip()
+
+    email = request.form.get(
+        "email",
+        ""
+    ).strip()
 
     if not email:
         return render_template(
@@ -138,16 +162,29 @@ def classify():
 
     cleaned_email = clean_text(email)
 
-    features = vectorizer.transform([cleaned_email])
+    features = vectorizer.transform(
+        [cleaned_email]
+    )
 
-    prediction = model.predict(features)[0]
+    prediction = model.predict(
+        features
+    )[0]
 
-    probabilities = model.predict_proba(features)[0]
+    probabilities = model.predict_proba(
+        features
+    )[0]
 
     confidence = max(probabilities) * 100
-    confidence = round(confidence, 2)
 
-    connection = sqlite3.connect(DATABASE)
+    confidence = round(
+        confidence,
+        2
+    )
+
+
+    connection = sqlite3.connect(
+        DATABASE
+    )
 
     connection.execute(
         """
@@ -155,11 +192,16 @@ def classify():
         (email, category, confidence)
         VALUES (?, ?, ?)
         """,
-        (email, prediction, confidence)
+        (
+            email,
+            prediction,
+            confidence
+        )
     )
 
     connection.commit()
     connection.close()
+
 
     return render_template(
         "result.html",
@@ -171,11 +213,19 @@ def classify():
 
 @app.route("/history")
 def history():
-    connection = sqlite3.connect(DATABASE)
+
+    connection = sqlite3.connect(
+        DATABASE
+    )
 
     records = connection.execute(
         """
-        SELECT id, email, category, confidence, created_at
+        SELECT
+            id,
+            email,
+            category,
+            confidence,
+            created_at
         FROM history
         ORDER BY id DESC
         """
@@ -191,23 +241,34 @@ def history():
 
 @app.route("/clear-history", methods=["POST"])
 def clear_history():
-    connection = sqlite3.connect(DATABASE)
 
-    connection.execute("DELETE FROM history")
+    connection = sqlite3.connect(
+        DATABASE
+    )
+
+    connection.execute(
+        "DELETE FROM history"
+    )
 
     connection.commit()
     connection.close()
 
-    return redirect(url_for("history"))
+    return redirect(
+        url_for("history")
+    )
 
 
 @app.route("/about")
 def about():
-    return render_template("about.html")
+    return render_template(
+        "about.html"
+    )
 
 
-# Create database when the application starts.
-# This is important for Render/Gunicorn deployment.
+# IMPORTANT:
+# Database is created when Flask/Gunicorn starts.
+# This fixes the Render "no such table: history" error.
+
 create_database()
 
 
