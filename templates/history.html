@@ -51,7 +51,7 @@
         }
 
         .container {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 60px auto;
             padding: 20px;
         }
@@ -108,6 +108,7 @@
         table {
             width: 100%;
             border-collapse: collapse;
+            min-width: 900px;
         }
 
         th {
@@ -130,24 +131,39 @@
         }
 
         .email {
-            max-width: 400px;
+            max-width: 350px;
             word-wrap: break-word;
             color: #475569;
         }
 
-        .category {
+        .result-true {
             display: inline-block;
-            background: #e0e7ff;
-            color: #3730a3;
+            background: #dcfce7;
+            color: #15803d;
             padding: 6px 12px;
             border-radius: 20px;
             font-weight: bold;
             font-size: 13px;
         }
 
-        .confidence {
+        .result-false {
+            display: inline-block;
+            background: #fee2e2;
+            color: #b91c1c;
+            padding: 6px 12px;
+            border-radius: 20px;
             font-weight: bold;
-            color: #2563eb;
+            font-size: 13px;
+        }
+
+        .true-percentage {
+            font-weight: bold;
+            color: #15803d;
+        }
+
+        .false-percentage {
+            font-weight: bold;
+            color: #dc2626;
         }
 
         .empty {
@@ -214,9 +230,7 @@
 
 </head>
 
-
 <body>
-
 
     <nav>
 
@@ -242,9 +256,7 @@
 
     </nav>
 
-
     <div class="container">
-
 
         <div class="title">
 
@@ -258,12 +270,9 @@
 
         </div>
 
-
         <div class="card">
 
-
             {% if records %}
-
 
                 <div class="top-bar">
 
@@ -273,7 +282,6 @@
                         <strong>{{ records|length }}</strong>
 
                     </div>
-
 
                     <form
                         action="/clear-history"
@@ -292,7 +300,6 @@
 
                 </div>
 
-
                 <table>
 
                     <thead>
@@ -308,11 +315,15 @@
                             </th>
 
                             <th>
-                                Category
+                                Result
                             </th>
 
                             <th>
-                                Confidence
+                                True %
+                            </th>
+
+                            <th>
+                                False %
                             </th>
 
                             <th>
@@ -322,7 +333,6 @@
                         </tr>
 
                     </thead>
-
 
                     <tbody>
 
@@ -340,18 +350,32 @@
 
                             <td>
 
-                                <span class="category">
-                                    {{ record[2] }}
-                                </span>
+                                {% if record[2] == "True" %}
+
+                                    <span class="result-true">
+                                        TRUE
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="result-false">
+                                        FALSE
+                                    </span>
+
+                                {% endif %}
 
                             </td>
 
-                            <td class="confidence">
-                                {{ record[3] }}%
+                            <td class="true-percentage">
+                                {{ record[4] }}%
+                            </td>
+
+                            <td class="false-percentage">
+                                {{ record[5] }}%
                             </td>
 
                             <td>
-                                {{ record[4] }}
+                                {{ record[6] }}
                             </td>
 
                         </tr>
@@ -362,9 +386,7 @@
 
                 </table>
 
-
             {% else %}
-
 
                 <div class="empty">
 
@@ -385,14 +407,11 @@
 
                 </div>
 
-
             {% endif %}
-
 
         </div>
 
     </div>
-
 
     <footer>
 
@@ -401,7 +420,6 @@
         SY BCS Mini Project
 
     </footer>
-
 
 </body>
 

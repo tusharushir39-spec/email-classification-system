@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Email Classification System</title>
+    <title>Email Genuine/Fake Detection System</title>
 
     <style>
+
         * {
             margin: 0;
             padding: 0;
@@ -67,6 +71,14 @@
         .hero p {
             font-size: 17px;
             color: #64748b;
+            line-height: 1.6;
+        }
+
+        .info {
+            text-align: center;
+            margin-top: 12px;
+            color: #64748b;
+            font-size: 14px;
         }
 
         .card {
@@ -116,20 +128,21 @@
             background: #1d4ed8;
         }
 
-        .categories {
+        .features {
             display: flex;
-            flex-wrap: wrap;
             justify-content: center;
-            gap: 10px;
+            flex-wrap: wrap;
+            gap: 12px;
             margin-top: 30px;
         }
 
-        .category {
-            background: #e0e7ff;
-            color: #3730a3;
-            padding: 8px 14px;
+        .feature {
+            background: #eff6ff;
+            color: #1d4ed8;
+            padding: 10px 16px;
             border-radius: 20px;
             font-size: 13px;
+            font-weight: bold;
         }
 
         .error {
@@ -166,8 +179,11 @@
             .card {
                 padding: 22px;
             }
+
         }
+
     </style>
+
 </head>
 
 <body>
@@ -179,9 +195,19 @@
         </div>
 
         <div>
-            <a href="/">Home</a>
-            <a href="/history">History</a>
-            <a href="/about">About</a>
+
+            <a href="/">
+                Home
+            </a>
+
+            <a href="/history">
+                History
+            </a>
+
+            <a href="/about">
+                About
+            </a>
+
         </div>
 
     </nav>
@@ -191,11 +217,18 @@
 
         <div class="hero">
 
-            <h1>Email Classification System</h1>
+            <h1>
+                Email Genuine/Fake Detection
+            </h1>
 
             <p>
-                Classify your emails automatically using Machine Learning
+                Analyze an email using Machine Learning
+                and determine whether it is Genuine or Fake.
             </p>
+
+            <div class="info">
+                The system provides True and False probability percentages.
+            </div>
 
         </div>
 
@@ -226,36 +259,28 @@
 
 
                 <button type="submit">
-                    Classify Email
+                    Analyze Email
                 </button>
 
             </form>
 
 
-            <div class="categories">
+            <div class="features">
 
-                <span class="category">
-                    Education
+                <span class="feature">
+                    Machine Learning
                 </span>
 
-                <span class="category">
-                    Work
+                <span class="feature">
+                    True Probability
                 </span>
 
-                <span class="category">
-                    Promotional
+                <span class="feature">
+                    False Probability
                 </span>
 
-                <span class="category">
-                    Spam
-                </span>
-
-                <span class="category">
-                    Security
-                </span>
-
-                <span class="category">
-                    Personal
+                <span class="feature">
+                    Classification History
                 </span>
 
             </div>
@@ -274,4 +299,5 @@
     </footer>
 
 </body>
+
 </html>

@@ -9,7 +9,6 @@ app = Flask(__name__)
 
 DATABASE = "email_classifier.db"
 
-
 training_emails = [
     "your examination timetable is available",
     "please submit your college assignment",
@@ -48,45 +47,14 @@ training_emails = [
     "hope you are doing well"
 ]
 
-
 training_labels = [
-    "Education",
-    "Education",
-    "Education",
-    "Education",
-    "Education",
-
-    "Work",
-    "Work",
-    "Work",
-    "Work",
-    "Work",
-
-    "Promotional",
-    "Promotional",
-    "Promotional",
-    "Promotional",
-    "Promotional",
-
-    "Spam",
-    "Spam",
-    "Spam",
-    "Spam",
-    "Spam",
-
-    "Security",
-    "Security",
-    "Security",
-    "Security",
-    "Security",
-
-    "Personal",
-    "Personal",
-    "Personal",
-    "Personal",
-    "Personal"
+    "True","True","True","True","True",
+    "True","True","True","True","True",
+    "False","False","False","False","False",
+    "False","False","False","False","False",
+    "False","False","False","False","False",
+    "True","True","True","True","True"
 ]
-
 
 vectorizer = TfidfVectorizer(
     lowercase=True,
@@ -95,32 +63,15 @@ vectorizer = TfidfVectorizer(
 
 X = vectorizer.fit_transform(training_emails)
 
-
 model = MultinomialNB()
 model.fit(X, training_labels)
 
 
 def clean_text(text):
     text = text.lower()
-
-    text = re.sub(
-        r"http\S+|www\S+",
-        " ",
-        text
-    )
-
-    text = re.sub(
-        r"[^a-z0-9\s]",
-        " ",
-        text
-    )
-
-    text = re.sub(
-        r"\s+",
-        " ",
-        text
-    )
-
+    text = re.sub(r"http\S+|www\S+", " ", text)
+    text = re.sub(r"[^a-z0-9\s]", " ", text)
+    text = re.sub(r"\s+", " ", text)
     return text.strip()
 
 
@@ -133,6 +84,8 @@ def create_database():
             email TEXT NOT NULL,
             category TEXT NOT NULL,
             confidence REAL NOT NULL,
+            true_percentage REAL NOT NULL,
+            false_percentage REAL NOT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     """)
@@ -149,10 +102,7 @@ def home():
 @app.route("/classify", methods=["POST"])
 def classify():
 
-    email = request.form.get(
-        "email",
-        ""
-    ).strip()
+    email = request.form.get("email", "").strip()
 
     if not email:
         return render_template(
@@ -162,70 +112,64 @@ def classify():
 
     cleaned_email = clean_text(email)
 
-    features = vectorizer.transform(
-        [cleaned_email]
+    features = vectorizer.transform([cleaned_email])
+
+    prediction = model.predict(features)[0]
+
+    probabilities = model.predict_proba(features)[0]
+
+    class_probabilities = dict(
+        zip(model.classes_, probabilities)
     )
 
-    prediction = model.predict(
-        features
-    )[0]
-
-    probabilities = model.predict_proba(
-        features
-    )[0]
-
-    confidence = max(probabilities) * 100
-
-    confidence = round(
-        confidence,
+    true_percentage = round(
+        class_probabilities.get("True", 0) * 100,
         2
     )
 
-
-    connection = sqlite3.connect(
-        DATABASE
+    false_percentage = round(
+        class_probabilities.get("False", 0) * 100,
+        2
     )
+
+    connection = sqlite3.connect(DATABASE)
 
     connection.execute(
         """
         INSERT INTO history
-        (email, category, confidence)
-        VALUES (?, ?, ?)
+        (email, category, confidence, true_percentage, false_percentage)
+        VALUES (?, ?, ?, ?, ?)
         """,
         (
             email,
             prediction,
-            confidence
+            max(true_percentage, false_percentage),
+            true_percentage,
+            false_percentage
         )
     )
 
     connection.commit()
     connection.close()
 
-
     return render_template(
         "result.html",
         email=email,
-        category=prediction,
-        confidence=confidence
+        prediction=prediction,
+        true_percentage=true_percentage,
+        false_percentage=false_percentage
     )
 
 
 @app.route("/history")
 def history():
 
-    connection = sqlite3.connect(
-        DATABASE
-    )
+    connection = sqlite3.connect(DATABASE)
 
     records = connection.execute(
         """
-        SELECT
-            id,
-            email,
-            category,
-            confidence,
-            created_at
+        SELECT id, email, category, confidence,
+               true_percentage, false_percentage, created_at
         FROM history
         ORDER BY id DESC
         """
@@ -242,32 +186,20 @@ def history():
 @app.route("/clear-history", methods=["POST"])
 def clear_history():
 
-    connection = sqlite3.connect(
-        DATABASE
-    )
+    connection = sqlite3.connect(DATABASE)
 
-    connection.execute(
-        "DELETE FROM history"
-    )
+    connection.execute("DELETE FROM history")
 
     connection.commit()
     connection.close()
 
-    return redirect(
-        url_for("history")
-    )
+    return redirect(url_for("history"))
 
 
 @app.route("/about")
 def about():
-    return render_template(
-        "about.html"
-    )
+    return render_template("about.html")
 
-
-# IMPORTANT:
-# Database is created when Flask/Gunicorn starts.
-# This fixes the Render "no such table: history" error.
 
 create_database()
 

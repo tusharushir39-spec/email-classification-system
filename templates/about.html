@@ -7,7 +7,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>About - Email Classification System</title>
+    <title>About - Email Genuine/Fake Detection</title>
 
     <style>
 
@@ -131,19 +131,28 @@
             font-weight: bold;
         }
 
-        .categories {
+        .result-list {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 15px;
             margin-top: 15px;
         }
 
-        .category {
-            background: #eff6ff;
-            color: #1d4ed8;
-            padding: 9px 15px;
+        .result {
+            padding: 12px 20px;
             border-radius: 20px;
-            font-size: 14px;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .true {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .false {
+            background: #fee2e2;
+            color: #b91c1c;
         }
 
         .student-project {
@@ -187,9 +196,7 @@
 
 </head>
 
-
 <body>
-
 
     <nav>
 
@@ -226,7 +233,7 @@
             </h1>
 
             <p>
-                Email Classification System Using Machine Learning
+                Email Genuine/Fake Detection Using Machine Learning
             </p>
 
         </div>
@@ -239,16 +246,24 @@
             </h2>
 
             <p>
-                The Email Classification System is a machine learning
-                based application designed to automatically classify
-                email messages into different categories.
+                The Email Genuine/Fake Detection System is a
+                machine learning based web application designed
+                to analyze email messages and classify them as
+                True or False.
             </p>
 
             <p>
-                The system processes the entered email text, converts
-                it into numerical features using TF-IDF and applies
-                a Multinomial Naive Bayes machine learning model to
-                predict the appropriate category.
+                The system processes the entered email text,
+                cleans the text and converts it into numerical
+                features using TF-IDF. A Multinomial Naive Bayes
+                model is then used to generate the classification
+                result.
+            </p>
+
+            <p>
+                Along with the predicted result, the system displays
+                the probability percentages for both True and False
+                classifications.
             </p>
 
         </div>
@@ -269,7 +284,8 @@
                     </h3>
 
                     <p>
-                        The user enters an email message into the system.
+                        The user enters or pastes an email message
+                        into the system.
                     </p>
 
                 </div>
@@ -278,12 +294,13 @@
                 <div class="feature">
 
                     <h3>
-                        2. Text Processing
+                        2. Text Preprocessing
                     </h3>
 
                     <p>
-                        The email text is cleaned and prepared for
-                        machine learning.
+                        The email text is cleaned by converting it
+                        to lowercase, removing URLs, special
+                        characters and unnecessary spaces.
                     </p>
 
                 </div>
@@ -296,8 +313,8 @@
                     </h3>
 
                     <p>
-                        Important words are converted into numerical
-                        features using TF-IDF.
+                        The cleaned email is converted into numerical
+                        features using TF-IDF vectorization.
                     </p>
 
                 </div>
@@ -306,16 +323,76 @@
                 <div class="feature">
 
                     <h3>
-                        4. Classification
+                        4. Machine Learning
                     </h3>
 
                     <p>
-                        Multinomial Naive Bayes predicts the email category.
+                        Multinomial Naive Bayes analyzes the
+                        extracted features and predicts the result.
+                    </p>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <h3>
+                        5. Probability
+                    </h3>
+
+                    <p>
+                        The system calculates True and False
+                        probability percentages for the email.
+                    </p>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <h3>
+                        6. History
+                    </h3>
+
+                    <p>
+                        The classification result and probabilities
+                        are stored in the SQLite database.
                     </p>
 
                 </div>
 
             </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>
+                Classification Results
+            </h2>
+
+            <p>
+                The system provides two possible classification
+                results:
+            </p>
+
+            <div class="result-list">
+
+                <span class="result true">
+                    TRUE
+                </span>
+
+                <span class="result false">
+                    FALSE
+                </span>
+
+            </div>
+
+            <p style="margin-top: 20px;">
+                The result page displays both probabilities,
+                for example True — 60% and False — 40%.
+            </p>
 
         </div>
 
@@ -328,21 +405,37 @@
 
             <div class="tech-list">
 
-                <span class="tech">Python</span>
+                <span class="tech">
+                    Python
+                </span>
 
-                <span class="tech">Flask</span>
+                <span class="tech">
+                    Flask
+                </span>
 
-                <span class="tech">Scikit-learn</span>
+                <span class="tech">
+                    Scikit-learn
+                </span>
 
-                <span class="tech">TF-IDF</span>
+                <span class="tech">
+                    TF-IDF
+                </span>
 
-                <span class="tech">Naive Bayes</span>
+                <span class="tech">
+                    Multinomial Naive Bayes
+                </span>
 
-                <span class="tech">SQLite</span>
+                <span class="tech">
+                    SQLite
+                </span>
 
-                <span class="tech">HTML</span>
+                <span class="tech">
+                    HTML
+                </span>
 
-                <span class="tech">CSS</span>
+                <span class="tech">
+                    CSS
+                </span>
 
             </div>
 
@@ -352,34 +445,65 @@
         <div class="card">
 
             <h2>
-                Email Categories
+                Project Features
             </h2>
 
-            <div class="categories">
+            <div class="features">
 
-                <span class="category">
-                    Education
-                </span>
+                <div class="feature">
 
-                <span class="category">
-                    Work
-                </span>
+                    <h3>
+                        Machine Learning
+                    </h3>
 
-                <span class="category">
-                    Promotional
-                </span>
+                    <p>
+                        Uses a machine learning model for email
+                        classification.
+                    </p>
 
-                <span class="category">
-                    Spam
-                </span>
+                </div>
 
-                <span class="category">
-                    Security
-                </span>
 
-                <span class="category">
-                    Personal
-                </span>
+                <div class="feature">
+
+                    <h3>
+                        True Probability
+                    </h3>
+
+                    <p>
+                        Displays the probability of the email
+                        being classified as True.
+                    </p>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <h3>
+                        False Probability
+                    </h3>
+
+                    <p>
+                        Displays the probability of the email
+                        being classified as False.
+                    </p>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <h3>
+                        Classification History
+                    </h3>
+
+                    <p>
+                        Stores previous classification results
+                        in an SQLite database.
+                    </p>
+
+                </div>
 
             </div>
 
@@ -393,7 +517,8 @@
             </h2>
 
             <p>
-                Email Classification System Using Machine Learning
+                Email Genuine/Fake Detection System Using
+                Machine Learning
             </p>
 
             <p>
@@ -410,7 +535,7 @@
 
     <footer>
 
-        Email Classification System
+        Email Genuine/Fake Detection System
         <br>
         SY BCS Mini Project
 
